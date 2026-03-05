@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AOSEA Global Services Limited – Corporate Website
+
+Indigenous technical services for Nigeria's oil & gas sector.
+
+## Tech Stack
+
+- **Next.js 16** (App Router)
+- **Tailwind CSS v4**
+- **TypeScript**
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `app/` – Pages (Home, About, Services, Industries, Contact)
+- `components/` – Navbar, Footer, CTA, InquiryForm, ServiceCard, HeroVideo
+- `app/globals.css` – Design tokens (fonts, colors)
 
-## Learn More
+## Contact Form (Brevo)
 
-To learn more about Next.js, take a look at the following resources:
+The contact form sends emails via [Brevo](https://www.brevo.com/) (formerly Sendinblue). Configure:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. Copy `.env.example` to `.env.local`
+2. Add your Brevo API key from [Brevo API Keys](https://app.brevo.com/settings/keys/api)
+3. Register and verify your sender email in [Brevo Senders](https://app.brevo.com/senders/list)
+4. Set `CONTACT_RECIPIENT_EMAIL` to the inbox that receives inquiry notifications
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Two emails are sent per submission: a confirmation to the user and a notification to your team. Custom HTML templates are in `lib/email-templates.ts`.
+
+## Hero Video
+
+Add your intro video to `public/hero-video.mp4`. The hero section will display it. If the file is missing, a placeholder is shown.
+
+## Design System
+
+- **Fonts:** DM Sans (headings), Source Sans 3 (body)
+- **Colors:** Navy 950–600, Accent (gold) 400–600, Gray scale
+- **Tone:** Industrial, executive, high-trust
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```bash
+vercel
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/` | Home – Hero, services, differentiators, CTAs |
+| `/about` | Company overview, mission, values, leadership |
+| `/services` | Service portfolio overview |
+| `/services/technical` | Technical services |
+| `/services/project-management` | Project management |
+| `/services/procurement` | Procurement & supplies |
+| `/services/training` | Training & compliance |
+| `/services/manpower` | Manpower supply |
+| `/industries` | Industries served |
+| `/contact` | Contact form, offices |
