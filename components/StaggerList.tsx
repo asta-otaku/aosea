@@ -8,11 +8,12 @@ interface StaggerListProps {
   className?: string;
   stagger?: number;
   delayChildren?: number;
-  /** "slide" | "scale" | "blur" | "fade" */
-  variant?: "slide" | "scale" | "blur" | "fade";
+  /** "slide" | "scale" | "blur" | "fade" | "flip" | "skew" */
+  variant?: "slide" | "scale" | "blur" | "fade" | "flip" | "skew";
 }
 
 const easeCubic = [0.22, 1, 0.36, 1] as const;
+
 const itemVariants = {
   slide: {
     hidden: { opacity: 0, y: 40 },
@@ -29,6 +30,26 @@ const itemVariants = {
   fade: {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { duration: 0.5 } },
+  },
+  // Each item flips in from a 90-degree rotateY with perspective
+  flip: {
+    hidden: { opacity: 0, rotateY: -90, transformPerspective: 800 },
+    visible: {
+      opacity: 1,
+      rotateY: 0,
+      transformPerspective: 800,
+      transition: { duration: 0.6, ease: easeCubic },
+    },
+  },
+  // Items sweep in from the left with a skew that snaps straight
+  skew: {
+    hidden: { opacity: 0, x: -44, skewX: -8 },
+    visible: {
+      opacity: 1,
+      x: 0,
+      skewX: 0,
+      transition: { duration: 0.55, ease: easeCubic },
+    },
   },
 };
 

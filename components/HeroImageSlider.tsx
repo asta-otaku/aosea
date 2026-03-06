@@ -29,13 +29,17 @@ export default function HeroImageSlider({
 
   return (
     <div className={`relative min-h-[60vh] overflow-hidden ${className}`}>
-      <AnimatePresence initial={false} mode="wait">
+      <AnimatePresence initial={false}>
         <motion.div
           key={index}
-          initial={{ x: "100%" }}
-          animate={{ x: 0 }}
-          exit={{ x: "-100%" }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] as const }}
+          // Ken Burns: each slide fades in and slowly zooms from 1.0 → 1.1 over its 5s lifespan
+          initial={{ opacity: 0, scale: 1.0 }}
+          animate={{ opacity: 1, scale: 1.1 }}
+          exit={{ opacity: 0, scale: 1.05 }}
+          transition={{
+            opacity: { duration: 1.0, ease: [0.22, 1, 0.36, 1] },
+            scale: { duration: SLIDE_DURATION_MS / 1000 + 1, ease: "linear" },
+          }}
           className="absolute inset-0"
         >
           <Image

@@ -12,6 +12,8 @@ interface TextRevealProps {
   split?: "words" | "lines" | "chars" | "none";
 }
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 export function TextReveal({
   children,
   className = "",
@@ -23,21 +25,21 @@ export function TextReveal({
   const isInView = useInView(ref, { once: true, margin: "-40px" });
 
   const text = typeof children === "string" ? children : String(children);
-  const words = text.split(/\s+/);
-  const lines = text.split(/\n/);
-  const chars = text.split("");
 
-  const container = {
-    hidden: { opacity: 0 },
-    visible: (i = 0) => ({
-      opacity: 1,
-      transition: { staggerChildren: split === "words" ? 0.04 : split === "chars" ? 0.02 : 0.06, delayChildren: delay },
-    }),
+  const staggerMap: Record<string, number> = {
+    words: 0.055,
+    chars: 0.025,
+    lines: 0.08,
   };
 
-  const item = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
+  const container = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerChildren: staggerMap[split] ?? 0.05,
+        delayChildren: delay,
+      },
+    },
   };
 
   if (split === "none") {
@@ -46,7 +48,7 @@ export function TextReveal({
         ref={ref}
         initial={{ opacity: 0, y: 24 }}
         animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 24 }}
-        transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 0.7, delay, ease }}
         className={className}
       >
         <Tag className="inline">{children}</Tag>
@@ -54,7 +56,55 @@ export function TextReveal({
     );
   }
 
-  const items = split === "words" ? words : split === "lines" ? lines : chars;
+  // Words / lines: each word rises up from behind a clip (overflow:hidden container)
+  if (split === "words" || split === "lines") {
+    const items =
+      split === "words" ? text.split(/\s+/) : text.split(/\n/);
+
+    return (
+      <motion.div
+        ref={ref}
+        initial="hidden"
+        animate={isInView ? "visible" : "hidden"}
+        variants={container}
+        aria-label={text}
+      >
+        <Tag className={`inline ${className}`}>
+          {items.map((part, i) => (
+            <span
+              key={i}
+              style={{
+                display: "inline-block",
+                overflow: "hidden",
+                verticalAlign: "bottom",
+                lineHeight: 1.3,
+                marginRight: split === "words" ? "0.28em" : 0,
+              }}
+            >
+              <motion.span
+                className="inline-block"
+                variants={{
+                  hidden: { y: "115%", rotateZ: 2.5, opacity: 0.01 },
+                  visible: {
+                    y: "0%",
+                    rotateZ: 0,
+                    opacity: 1,
+                    transition: { duration: 0.75, ease },
+                  },
+                }}
+                style={{ transformOrigin: "bottom left" }}
+              >
+                {part}
+              </motion.span>
+            </span>
+          ))}
+        </Tag>
+      </motion.div>
+    );
+  }
+
+  // Chars: 3D rotateX flip from below
+  const chars = text.split("");
 
   return (
     <motion.div
@@ -62,17 +112,28 @@ export function TextReveal({
       initial="hidden"
       animate={isInView ? "visible" : "hidden"}
       variants={container}
+      style={{ perspective: 500 }}
     >
-      <Tag className={`inline ${className}`}>
-        {items.map((part, i) => (
+      <Tag className={`inline ${className}`} aria-label={text}>
+        {chars.map((char, i) => (
           <motion.span
             key={i}
-            variants={item}
             className="inline-block"
-            style={{ marginRight: split === "words" ? "0.25em" : split === "chars" ? "0.03em" : 0 }}
+            variants={{
+              hidden: { opacity: 0, y: 28, rotateX: -70 },
+              visible: {
+                opacity: 1,
+                y: 0,
+                rotateX: 0,
+                transition: { duration: 0.45, ease },
+              },
+            }}
+            style={{
+              marginRight: char === " " ? "0.28em" : "0.01em",
+              transformOrigin: "bottom center",
+            }}
           >
-            {part}
-            {split === "words" && i < words.length - 1 ? "\u00A0" : split === "lines" && i < lines.length - 1 ? "\n" : ""}
+            {char === " " ? "\u00A0" : char}
           </motion.span>
         ))}
       </Tag>

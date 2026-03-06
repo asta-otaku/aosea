@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const serviceLinks = [
   {
@@ -68,6 +69,8 @@ const navLinks = [
   { href: "/contact", label: "Contact" },
 ];
 
+const ease = [0.22, 1, 0.36, 1] as const;
+
 function isActive(href: string, pathname: string) {
   if (href === "/") return pathname === "/";
   return pathname === href || pathname.startsWith(href + "/");
@@ -120,8 +123,6 @@ export default function Navbar() {
     }`;
   };
 
-  const servicesActive = pathname.startsWith("/services");
-
   return (
     <header className="sticky top-0 z-50 border-b border-gray-200 bg-white shadow-sm">
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 lg:px-8">
@@ -146,35 +147,48 @@ export default function Navbar() {
                 onMouseEnter={() => setServicesOpen(true)}
                 onMouseLeave={() => setServicesOpen(false)}
               >
-                <Link
-                  href={link.href}
-                  className={linkClass(link.href)}
-                >
+                <Link href={link.href} className={linkClass(link.href)}>
                   {link.label}
                 </Link>
-                {servicesOpen && (
-                  <div className="absolute left-0 top-full mt-1 w-72 max-h-[80vh] overflow-y-auto rounded-lg border border-gray-200 bg-white py-2 shadow-xl">
-                    {link.children.map((child) => (
-                      <div key={child.href}>
-                        <Link
-                          href={child.href}
-                          className={childLinkClass(child.href)}
+
+                {/* Animated dropdown */}
+                <AnimatePresence>
+                  {servicesOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: -6, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -6, scale: 0.97 }}
+                      transition={{ duration: 0.18, ease }}
+                      style={{ transformOrigin: "top center" }}
+                      className="absolute left-0 top-full mt-1 max-h-[80vh] w-72 overflow-y-auto rounded-lg border border-gray-200 bg-white py-2 shadow-xl"
+                    >
+                      {link.children.map((child, i) => (
+                        <motion.div
+                          key={child.href}
+                          initial={{ opacity: 0, x: -8 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ duration: 0.15, delay: i * 0.03, ease }}
                         >
-                          {child.label}
-                        </Link>
-                        {child.children?.map((sub) => (
                           <Link
-                            key={sub.href}
-                            href={sub.href}
-                            className={subChildLinkClass(sub.href)}
+                            href={child.href}
+                            className={childLinkClass(child.href)}
                           >
-                            {sub.label}
+                            {child.label}
                           </Link>
-                        ))}
-                      </div>
-                    ))}
-                  </div>
-                )}
+                          {child.children?.map((sub) => (
+                            <Link
+                              key={sub.href}
+                              href={sub.href}
+                              className={subChildLinkClass(sub.href)}
+                            >
+                              {sub.label}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      ))}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
               </div>
             ) : (
               <Link
@@ -194,84 +208,111 @@ export default function Navbar() {
           </Link>
         </div>
 
-        {/* Mobile menu button */}
+        {/* Morphing hamburger button */}
         <button
           type="button"
-          className="md:hidden rounded p-2 text-gray-600 hover:bg-gray-100"
+          className="relative flex h-10 w-10 items-center justify-center rounded md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
         >
-          <svg
-            className="h-6 w-6"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            {mobileOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          <span className="flex w-6 flex-col gap-[5px]">
+            <motion.span
+              className="block h-0.5 rounded bg-gray-700"
+              animate={mobileOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.28, ease }}
+            />
+            <motion.span
+              className="block h-0.5 rounded bg-gray-700"
+              animate={mobileOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+              transition={{ duration: 0.2 }}
+            />
+            <motion.span
+              className="block h-0.5 rounded bg-gray-700"
+              animate={mobileOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
+              transition={{ duration: 0.28, ease }}
+            />
+          </span>
         </button>
       </nav>
 
-      {/* Mobile menu */}
-      {mobileOpen && (
-        <div className="border-t border-gray-200 bg-gray-50 md:hidden">
-          <div className="space-y-1 px-4 py-4">
-            {navLinks.map((link) => (
-              <div key={link.href}>
-                <Link
-                  href={link.href}
-                  className={mobileLinkClass(link.href)}
-                  onClick={() => setMobileOpen(false)}
+      {/* Animated mobile menu */}
+      <AnimatePresence initial={false}>
+        {mobileOpen && (
+          <motion.div
+            key="mobile-menu"
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.32, ease }}
+            className="overflow-hidden border-t border-gray-200 bg-gray-50 md:hidden"
+          >
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{
+                visible: {
+                  transition: { staggerChildren: 0.045, delayChildren: 0.05 },
+                },
+                hidden: {},
+              }}
+              className="space-y-1 px-4 py-4"
+            >
+              {navLinks.map((link) => (
+                <motion.div
+                  key={link.href}
+                  variants={{
+                    hidden: { opacity: 0, x: -14 },
+                    visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease } },
+                  }}
                 >
-                  {link.label}
-                </Link>
-                {link.children?.map((child) => (
-                  <div key={child.href}>
-                    <Link
-                      href={child.href}
-                      className={mobileChildClass(child.href)}
-                      onClick={() => setMobileOpen(false)}
-                    >
-                      {child.label}
-                    </Link>
-                    {child.children?.map((sub) => (
+                  <Link
+                    href={link.href}
+                    className={mobileLinkClass(link.href)}
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                  {link.children?.map((child) => (
+                    <div key={child.href}>
                       <Link
-                        key={sub.href}
-                        href={sub.href}
-                        className={mobileSubChildClass(sub.href)}
+                        href={child.href}
+                        className={mobileChildClass(child.href)}
                         onClick={() => setMobileOpen(false)}
                       >
-                        {sub.label}
+                        {child.label}
                       </Link>
-                    ))}
-                  </div>
-                ))}
-              </div>
-            ))}
-            <Link
-              href="/contact"
-              className="mt-4 block rounded-md bg-sky-600 px-4 py-2 text-center font-semibold text-white"
-              onClick={() => setMobileOpen(false)}
-            >
-              Request Proposal
-            </Link>
-          </div>
-        </div>
-      )}
+                      {child.children?.map((sub) => (
+                        <Link
+                          key={sub.href}
+                          href={sub.href}
+                          className={mobileSubChildClass(sub.href)}
+                          onClick={() => setMobileOpen(false)}
+                        >
+                          {sub.label}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </motion.div>
+              ))}
+              <motion.div
+                variants={{
+                  hidden: { opacity: 0, y: 10 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease } },
+                }}
+              >
+                <Link
+                  href="/contact"
+                  className="mt-4 block rounded-md bg-sky-600 px-4 py-2 text-center font-semibold text-white"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Request Proposal
+                </Link>
+              </motion.div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

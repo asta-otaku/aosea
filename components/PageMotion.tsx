@@ -6,13 +6,17 @@ import { ReactNode } from "react";
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 12,
+    scale: 0.97,
+    y: 20,
+    filter: "blur(6px)",
   },
   animate: {
     opacity: 1,
+    scale: 1,
     y: 0,
+    filter: "blur(0px)",
     transition: {
-      duration: 0.5,
+      duration: 0.6,
       ease: [0.22, 1, 0.36, 1] as const,
       staggerChildren: 0.06,
       delayChildren: 0.1,
@@ -20,8 +24,13 @@ const pageVariants = {
   },
   exit: {
     opacity: 0,
-    y: -8,
-    transition: { duration: 0.25 },
+    scale: 1.03,
+    y: -16,
+    filter: "blur(8px)",
+    transition: {
+      duration: 0.3,
+      ease: [0.4, 0, 1, 1] as const,
+    },
   },
 };
 
@@ -30,6 +39,7 @@ export default function PageMotion({ children }: { children: ReactNode }) {
     <motion.div
       initial="initial"
       animate="animate"
+      exit="exit"
       variants={pageVariants}
       className="min-h-full"
     >

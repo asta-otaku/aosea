@@ -1,7 +1,13 @@
 "use client";
 
 import Link from "next/link";
-import { motion } from "framer-motion";
+import {
+  motion,
+  useMotionValue,
+  useTransform,
+  useSpring,
+  useMotionTemplate,
+} from "framer-motion";
 import AnimatedImage from "@/components/AnimatedImage";
 
 interface ServiceCardProps {
@@ -19,19 +25,62 @@ export default function ServiceCard({
   icon,
   image,
 }: ServiceCardProps) {
+  // Separate motion values: percentage coords for glare, normalized [-0.5,0.5] for tilt
+  const glareX = useMotionValue(50);
+  const glareY = useMotionValue(50);
+  const tiltX = useMotionValue(0);
+  const tiltY = useMotionValue(0);
+
+  const rotateX = useSpring(useTransform(tiltY, [-0.5, 0.5], [9, -9]), {
+    stiffness: 220,
+    damping: 22,
+  });
+  const rotateY = useSpring(useTransform(tiltX, [-0.5, 0.5], [-9, 9]), {
+    stiffness: 220,
+    damping: 22,
+  });
+  const cardScale = useSpring(1, { stiffness: 280, damping: 24 });
+
+  const glareBackground = useMotionTemplate`radial-gradient(circle at ${glareX}% ${glareY}%, rgba(255,255,255,0.22) 0%, transparent 62%)`;
+
+  function onMouseMove(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    glareX.set(((e.clientX - rect.left) / rect.width) * 100);
+    glareY.set(((e.clientY - rect.top) / rect.height) * 100);
+    tiltX.set((e.clientX - rect.left) / rect.width - 0.5);
+    tiltY.set((e.clientY - rect.top) / rect.height - 0.5);
+    cardScale.set(1.03);
+  }
+
+  function onMouseLeave() {
+    glareX.set(50);
+    glareY.set(50);
+    tiltX.set(0);
+    tiltY.set(0);
+    cardScale.set(1);
+  }
+
   return (
     <motion.div
-      whileHover={{
-        y: -8,
-        scale: 1.02,
-        transition: { type: "spring", stiffness: 260, damping: 18 },
+      style={{
+        rotateX,
+        rotateY,
+        scale: cardScale,
+        transformPerspective: 800,
       }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
     >
       <Link
         href={href}
-        className="group block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:border-sky-500/40 hover:shadow-xl hover:shadow-sky-500/10"
+        className="group relative block overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all hover:border-sky-500/40 hover:shadow-xl hover:shadow-sky-500/10"
       >
+        {/* Glare highlight that tracks the cursor */}
+        <motion.div
+          className="pointer-events-none absolute inset-0 z-10 rounded-lg opacity-0 transition-opacity duration-200 group-hover:opacity-100"
+          style={{ background: glareBackground }}
+        />
+
         {image && (
           <div className="relative h-36 overflow-hidden">
             <AnimatedImage
@@ -50,11 +99,11 @@ export default function ServiceCard({
           </div>
         )}
         <div className="p-6">
-          <h3 className="font-heading text-lg font-semibold text-navy-900 group-hover:text-sky-600 transition-colors">
+          <h3 className="font-heading text-lg font-semibold text-navy-900 transition-colors group-hover:text-sky-600">
             {title}
           </h3>
           <p className="mt-2 text-sm text-gray-600">{description}</p>
-          <span className="mt-4 inline-flex items-center text-sm font-medium text-sky-600 group-hover:text-sky-500 transition-colors">
+          <span className="mt-4 inline-flex items-center text-sm font-medium text-sky-600 transition-colors group-hover:text-sky-500">
             Learn more
             <svg
               className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1"
