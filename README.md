@@ -1,4 +1,4 @@
-# AOSEA Global Services Limited – Corporate Website
+# AOSEA Global Resources Limited – Corporate Website
 
 Indigenous technical services for Nigeria's oil & gas sector.
 
@@ -52,15 +52,15 @@ vercel
 
 ## Pages
 
-| Route | Description |
-|-------|-------------|
-| `/` | Home – Hero, services, differentiators, CTAs |
-| `/about` | Company overview, mission, values, leadership |
-| `/services` | Service portfolio overview |
-| `/services/technical` | Technical services |
-| `/services/project-management` | Project management |
-| `/services/procurement` | Procurement & supplies |
-| `/services/training` | Training & compliance |
-| `/services/manpower` | Manpower supply |
-| `/industries` | Industries served |
-| `/contact` | Contact form, offices |
+| Route                          | Description                                   |
+| ------------------------------ | --------------------------------------------- |
+| `/`                            | Home – Hero, services, differentiators, CTAs  |
+| `/about`                       | Company overview, mission, values, leadership |
+| `/services`                    | Service portfolio overview                    |
+| `/services/technical`          | Technical services                            |
+| `/services/project-management` | Project management                            |
+| `/services/procurement`        | Procurement & supplies                        |
+| `/services/training`           | Training & compliance                         |
+| `/services/manpower`           | Manpower supply                               |
+| `/industries`                  | Industries served                             |
+| `/contact`                     | Contact form, offices                         |

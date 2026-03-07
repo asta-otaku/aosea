@@ -14,12 +14,12 @@ export type ContactFormPayload = {
 
 function getSender() {
   const fromEmail = process.env.BREVO_SENDER_EMAIL || "noreply@aosea.com";
-  const fromName = process.env.BREVO_SENDER_NAME || "AOSEA Global Services";
+  const fromName = process.env.BREVO_SENDER_NAME || "AOSEA Global Resources Limited";
   return { name: fromName, email: fromEmail };
 }
 
 function getRecipientEmail() {
-  return process.env.CONTACT_RECIPIENT_EMAIL || "info@aosea.com";
+  return process.env.CONTACT_RECIPIENT_EMAIL || "info@aoseaglobal.com";
 }
 
 export async function POST(request: Request) {
@@ -57,7 +57,7 @@ export async function POST(request: Request) {
       body: JSON.stringify({
         sender,
         to: [{ email, name }],
-        subject: "Thank you for your inquiry — AOSEA Global Services",
+        subject: "Thank you for your inquiry — AOSEA Global Resources Limited",
         htmlContent: getConfirmationEmailHtml({ name, company, service }),
         tags: ["contact", "inquiry", "confirmation"],
       }),

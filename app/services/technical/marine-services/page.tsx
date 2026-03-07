@@ -30,7 +30,7 @@ export default function MarineServicesPage() {
             Nigeria&apos;s oil and gas operations are inseparable from its waterways. From crew and cargo movements across the creeks and rivers of the Niger Delta to offshore platform supply and anchor handling, reliable marine logistics are critical to operational continuity. AOSEA provides Nigerian-focused marine support that keeps rigs, platforms, and construction spreads supplied, compliant, and on schedule.
           </p>
           <p>
-            We support operators and EPCs with marine logistics planning, equipment mobilization, vessel charter/management coordination—platform supply, crew transfer, tug/tow and barge support, and offshore marine supervision to keep deck operations running. Our services are tailored to Nigeria&apos;s unique maritime operating environment including shallow-draft vessel operations in the network of creeks and channels where deep-draft foreign vessels cannot navigate.
+            We support operators and EPCs with marine logistics planning, equipment mobilization, vessel charter/management coordination: platform supply, crew transfer, tug/tow and barge support, and offshore marine supervision to keep deck operations running. Our services are tailored to Nigeria&apos;s unique maritime operating environment including shallow-draft vessel operations in the network of creeks and channels where deep-draft foreign vessels cannot navigate.
           </p>
           <h2 className="mt-8 text-xl font-bold text-navy-900">
             Fully Compliant

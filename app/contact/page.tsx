@@ -20,14 +20,39 @@ const offices = [
   {
     city: "Lagos",
     address: "Lagos State, Nigeria",
-    type: "Office",
+    type: "",
   },
   {
     city: "Warri",
     address: "Delta State, Nigeria",
-    type: "Office",
+    type: "",
   },
 ];
+
+function MapPinIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+      />
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+      />
+    </svg>
+  );
+}
 
 export default function ContactPage() {
   return (
@@ -38,8 +63,7 @@ export default function ContactPage() {
             Contact Us
           </h1>
           <p className="mt-4 max-w-2xl mx-auto text-gray-300">
-            Get in touch for technical consultation, proposals, or compliance
-            advisory.
+            Get in touch for technical consultation, Projects partnership, or compliance advisory.
           </p>
         </div>
       </HeroImageSlider>
@@ -49,35 +73,56 @@ export default function ContactPage() {
           <div className="grid gap-12 lg:grid-cols-2">
             {/* Contact info */}
             <div>
-              <h2 className="font-heading text-2xl font-bold text-navy-900">
-                Corporate Offices
-              </h2>
+              <div className="flex items-center gap-2">
+                <MapPinIcon className="h-7 w-7 text-accent-600" />
+                <h2 className="font-heading text-2xl font-bold text-navy-900">
+                  Our Offices
+                </h2>
+              </div>
               <div className="mt-6 space-y-6">
                 {offices.map((office) => (
                   <div key={office.city}>
                     <h3 className="font-semibold text-navy-900">{office.city}</h3>
-                    <p className="text-sm text-gray-500">{office.type}</p>
-                    <p className="mt-1 text-gray-600">{office.address}</p>
+                    {office.type && (
+                      <p className="text-sm text-gray-500">{office.type}</p>
+                    )}
+                    <p className={office.type ? "mt-1 text-gray-600" : "mt-0.5 text-gray-600"}>
+                      {office.address}
+                    </p>
                   </div>
                 ))}
               </div>
               <div className="mt-8">
                 <h3 className="font-semibold text-navy-900">Email</h3>
                 <a
-                  href="mailto:info@aosea.com"
+                  href="mailto:info@aoseaglobal.com"
                   className="text-accent-600 hover:text-accent-500"
                 >
-                  info@aosea.com
+                  info@aoseaglobal.com
                 </a>
               </div>
               <div className="mt-4">
                 <h3 className="font-semibold text-navy-900">Phone</h3>
-                <a
-                  href="tel:+2348000000000"
-                  className="text-accent-600 hover:text-accent-500"
-                >
-                  +234 800 000 0000
-                </a>
+                <div className="mt-1 space-y-1">
+                  <a
+                    href="tel:+2348151114607"
+                    className="block text-accent-600 hover:text-accent-500"
+                  >
+                    +234 815 111 4607
+                  </a>
+                  <a
+                    href="tel:+2348143899609"
+                    className="block text-accent-600 hover:text-accent-500"
+                  >
+                    +234 814 389 9609
+                  </a>
+                  <a
+                    href="tel:+18255618334"
+                    className="block text-accent-600 hover:text-accent-500"
+                  >
+                    +1 825 561 8334
+                  </a>
+                </div>
               </div>
             </div>
 

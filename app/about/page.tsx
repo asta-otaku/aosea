@@ -8,9 +8,9 @@ import { AnimatedSection, AnimatedDiv, AnimatedHeading, AnimatedCard } from "@/c
 import { images } from "@/lib/images";
 
 export const metadata: Metadata = {
-  title: "About AOSEA | Indigenous Oil & Gas Services Nigeria",
+  title: "About AOSEA | Indigenous Oil & Gas Resources Nigeria",
   description:
-    "AOSEA Global Services Limited - Nigerian-rooted expertise, regulatory fluency, and execution accountability for Nigeria's oil & gas sector.",
+    "AOSEA Global Resources Limited - Nigerian-rooted expertise, regulatory fluency, and execution accountability for Nigeria's oil & gas sector.",
 };
 
 const coreValues = [
@@ -55,34 +55,34 @@ export default function AboutPage() {
       <AnimatedSection className="py-20">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
-          <div className="max-w-3xl">
-            <AnimatedHeading className="font-heading text-2xl font-bold text-navy-900">
-              Company Overview
-            </AnimatedHeading>
-            <p className="mt-4 text-gray-600 leading-relaxed">
-              AOSEA Global Services Limited is an indigenous technical services
-              company committed to advancing Nigeria&apos;s oil & gas sector
-              through regulatory fluency, execution accountability, and
-              compliance-ready solutions.
-            </p>
-            <p className="mt-4 text-gray-600 leading-relaxed">
-              We serve indigenous E&P operators, marginal field licensees, IOC
-              asset managers, EPC companies, and procurement managers with
-              technical services, project execution, procurement, training, and
-              manpower supply.
-            </p>
-          </div>
-          <div className="relative h-72 rounded-xl lg:h-80">
-            <AnimatedImage
-              src={images.powerPlant}
-              alt="Oil and gas operations"
-              fill
-              motion="reveal"
-              delay={0.2}
-              className="h-full w-full rounded-xl"
-              sizes="(max-width: 1024px) 100vw, 50vw"
-            />
-          </div>
+            <div className="max-w-3xl">
+              <AnimatedHeading className="font-heading text-2xl font-bold text-navy-900">
+                Company Overview
+              </AnimatedHeading>
+              <p className="mt-4 text-gray-600 leading-relaxed">
+                AOSEA Global Resources Limited is an indigenous technical services
+                company committed to advancing Nigeria&apos;s oil & gas sector
+                through regulatory fluency, execution accountability, and
+                compliance-ready solutions.
+              </p>
+              <p className="mt-4 text-gray-600 leading-relaxed">
+                We serve indigenous E&P operators, marginal field licensees, IOC
+                asset managers, EPC companies, and procurement managers with
+                technical services, project execution, procurement, training, and
+                manpower supply.
+              </p>
+            </div>
+            <div className="relative h-72 rounded-xl lg:h-80">
+              <AnimatedImage
+                src={images.powerPlant}
+                alt="Oil and gas operations"
+                fill
+                motion="reveal"
+                delay={0.2}
+                className="h-full w-full rounded-xl"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            </div>
           </div>
         </div>
       </AnimatedSection>
@@ -103,14 +103,14 @@ export default function AboutPage() {
                 />
               </div>
               <div className="p-6">
-              <h2 className="font-heading text-2xl font-bold text-navy-900">
-                Mission
-              </h2>
-              <p className="mt-4 text-gray-600">
-                To deliver trusted technical services and project execution that
-                advance Nigeria&apos;s energy security and industrialisation,
-                through indigenous expertise and regulatory compliance.
-              </p>
+                <h2 className="font-heading text-2xl font-bold text-navy-900">
+                  Mission
+                </h2>
+                <p className="mt-4 text-gray-600">
+                  To deliver trusted technical services and project execution that
+                  advance Nigeria&apos;s energy security and industrialisation,
+                  through indigenous expertise and regulatory compliance.
+                </p>
               </div>
             </div>
             <div className="overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
@@ -126,14 +126,14 @@ export default function AboutPage() {
                 />
               </div>
               <div className="p-6">
-              <h2 className="font-heading text-2xl font-bold text-navy-900">
-                Vision
-              </h2>
-              <p className="mt-4 text-gray-600">
-                To be the leading indigenous technical partner for Nigeria&apos;s
-                oil & gas sector, recognised for regulatory fluency, execution
-                accountability, and compliance-ready solutions.
-              </p>
+                <h2 className="font-heading text-2xl font-bold text-navy-900">
+                  Vision
+                </h2>
+                <p className="mt-4 text-gray-600">
+                  To be the leading indigenous technical partner for Nigeria&apos;s
+                  oil & gas sector, recognised for regulatory fluency, execution
+                  accountability, and compliance-ready solutions.
+                </p>
               </div>
             </div>
           </div>
@@ -145,16 +145,16 @@ export default function AboutPage() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <div>
-          <h2 className="font-heading text-2xl font-bold text-navy-900">
-            Indigenous Advantage
-          </h2>
-          <p className="mt-4 max-w-3xl text-gray-600">
-            AOSEA is Nigerian-rooted. We understand local operations, regulatory
-            nuances, and stakeholder expectations. Our team combines technical
-            depth with on-the-ground experience across the Niger Delta and
-            nationwide. We mobilise fast, deliver on spec, and maintain
-            compliance-ready documentation for every project.
-          </p>
+              <h2 className="font-heading text-2xl font-bold text-navy-900">
+                Indigenous Advantage
+              </h2>
+              <p className="mt-4 max-w-3xl text-gray-600">
+                AOSEA is Nigerian-rooted. We understand local operations, regulatory
+                nuances, and stakeholder expectations. Our team combines technical
+                depth with on-the-ground experience across the Niger Delta and
+                nationwide. We mobilise fast, deliver on spec, and maintain
+                compliance-ready documentation for every project.
+              </p>
             </div>
             <div className="relative h-64 rounded-xl lg:h-80">
               <AnimatedImage src={images.platformWorkers} alt="Offshore operations" fill motion="reveal" className="h-full w-full rounded-xl" sizes="50vw" />
@@ -239,8 +239,7 @@ export default function AboutPage() {
             Ready to Partner?
           </h2>
           <p className="mt-4 text-gray-300">
-            Get in touch for technical consultation, proposals, or compliance
-            advisory.
+            Get in touch for technical consultation, Projects partnership, or compliance advisory.
           </p>
           <Link
             href="/contact"

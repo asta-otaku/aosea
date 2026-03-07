@@ -83,44 +83,38 @@ export default function Navbar() {
 
   const linkClass = (href: string) => {
     const active = isActive(href, pathname);
-    return `text-sm font-medium transition-colors ${
-      active ? "text-sky-600" : "text-gray-600 hover:text-navy-900"
-    }`;
+    return `text-sm font-medium transition-colors ${active ? "text-sky-600" : "text-gray-600 hover:text-navy-900"
+      }`;
   };
 
   const childLinkClass = (href: string) => {
     const active = pathname === href;
-    return `block px-4 py-2 text-sm transition-colors ${
-      active ? "bg-sky-50 text-sky-600" : "text-gray-600 hover:bg-gray-100 hover:text-navy-900"
-    }`;
+    return `block px-4 py-2 text-sm transition-colors ${active ? "bg-sky-50 text-sky-600" : "text-gray-600 hover:bg-gray-100 hover:text-navy-900"
+      }`;
   };
 
   const subChildLinkClass = (href: string) => {
     const active = pathname === href;
-    return `block px-4 py-1.5 pl-6 text-sm transition-colors ${
-      active ? "bg-sky-50 text-sky-600" : "text-gray-500 hover:bg-gray-100 hover:text-navy-900"
-    }`;
+    return `block px-4 py-1.5 pl-6 text-sm transition-colors ${active ? "bg-sky-50 text-sky-600" : "text-gray-500 hover:bg-gray-100 hover:text-navy-900"
+      }`;
   };
 
   const mobileLinkClass = (href: string) => {
     const active = isActive(href, pathname);
-    return `block rounded px-3 py-2 transition-colors ${
-      active ? "bg-sky-50 text-sky-600 font-medium" : "text-gray-600 hover:bg-gray-100"
-    }`;
+    return `block rounded px-3 py-2 transition-colors ${active ? "bg-sky-50 text-sky-600 font-medium" : "text-gray-600 hover:bg-gray-100"
+      }`;
   };
 
   const mobileChildClass = (href: string) => {
     const active = pathname === href;
-    return `ml-4 block rounded px-3 py-2 text-sm transition-colors ${
-      active ? "bg-sky-50/50 text-sky-600" : "text-gray-500 hover:bg-gray-100"
-    }`;
+    return `ml-4 block rounded px-3 py-2 text-sm transition-colors ${active ? "bg-sky-50/50 text-sky-600" : "text-gray-500 hover:bg-gray-100"
+      }`;
   };
 
   const mobileSubChildClass = (href: string) => {
     const active = pathname === href;
-    return `ml-8 block rounded px-3 py-1.5 text-sm transition-colors ${
-      active ? "bg-sky-50/50 text-sky-600" : "text-gray-500 hover:bg-gray-100"
-    }`;
+    return `ml-8 block rounded px-3 py-1.5 text-sm transition-colors ${active ? "bg-sky-50/50 text-sky-600" : "text-gray-500 hover:bg-gray-100"
+      }`;
   };
 
   return (
@@ -129,7 +123,7 @@ export default function Navbar() {
         <Link href="/" className="flex items-center gap-2">
           <Image
             src="/logo.jpg"
-            alt="AOSEA Global Services"
+            alt="AOSEA Global Resources Limited"
             width={120}
             height={40}
             className="h-10 w-auto object-contain"

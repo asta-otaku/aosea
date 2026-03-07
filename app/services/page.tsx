@@ -62,14 +62,14 @@ export default function ServicesPage() {
             Indigenous Technical Services for Nigeria&apos;s Oil & Gas Sector
           </h1>
           <p className="mt-4 text-lg text-gray-300">
-            AOSEA Global Services Limited
+            AOSEA Global Resources Limited
           </p>
           <div className="mt-6 flex flex-wrap justify-center gap-4">
             <Link href="/" className="text-sm text-gray-400 hover:text-white">
               Website
             </Link>
             <span className="text-gray-600">•</span>
-            <a href="mailto:info@aosea.com" className="text-sm text-gray-400 hover:text-white">
+            <a href="mailto:info@aoseaglobal.com" className="text-sm text-gray-400 hover:text-white">
               Email
             </a>
             <span className="text-gray-600">•</span>
@@ -87,11 +87,10 @@ export default function ServicesPage() {
               <AnimatedCard key={service.href} index={i}>
                 <Link
                   href={service.href}
-                  className={`group block overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md ${
-                    i === 0
-                      ? "border-accent-500/50 ring-2 ring-accent-500/20 hover:ring-accent-500/30"
-                      : "border-gray-200 hover:border-accent-500/30"
-                  }`}
+                  className={`group block overflow-hidden rounded-lg border bg-white shadow-sm transition-all hover:shadow-md ${i === 0
+                    ? "border-accent-500/50 ring-2 ring-accent-500/20 hover:ring-accent-500/30"
+                    : "border-gray-200 hover:border-accent-500/30"
+                    }`}
                 >
                   <div className="flex items-center gap-3 border-b border-gray-100 p-6">
                     <span className="flex h-12 w-12 items-center justify-center rounded-lg bg-navy-950 font-heading text-lg font-bold text-accent-400">

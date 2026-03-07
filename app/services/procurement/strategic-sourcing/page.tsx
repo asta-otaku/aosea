@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function StrategicSourcingPage() {
   return (
     <ServiceSubPageTemplate
-      title="Strategic Sourcing – Equipment & Materials"
+      title="Strategic Sourcing: Equipment & Materials"
       parentTitle="Procurement & Supplies"
       parentHref="/services/procurement"
       number="03"

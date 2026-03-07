@@ -36,7 +36,7 @@ export function getConfirmationEmailHtml(params: {
   const name = escapeHtml(params.name);
   const company = escapeHtml(params.company);
   const service = escapeHtml(params.service);
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://aosea.com";
+  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://aoseaglobal.com";
   return `
 <!DOCTYPE html>
 <html>
@@ -52,7 +52,7 @@ export function getConfirmationEmailHtml(params: {
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: #ffffff; border-radius: 12px 12px 0 0; padding: 32px 32px 24px; border: 1px solid ${BORDER_COLOR}; border-bottom: none;">
           <tr>
             <td>
-              <img src="${getLogoUrl()}" alt="AOSEA Global Services" width="160" height="52" style="display: block; height: 52px; width: 160px; max-width: 160px; border: 0; outline: none;" />
+              <img src="${getLogoUrl()}" alt="AOSEA Global Resources Limited" width="160" height="52" style="display: block; height: 52px; width: 160px; max-width: 160px; border: 0; outline: none;" />
               <p style="margin: 10px 0 0; font-size: 13px; color: ${TEXT_MUTED}; letter-spacing: 0.02em;">Indigenous Technical Services for Nigeria&apos;s Oil &amp; Gas Sector</p>
               <div style="height: 4px; width: 48px; background: ${ACCENT_COLOR}; border-radius: 2px; margin-top: 20px;"></div>
             </td>
@@ -82,7 +82,7 @@ export function getConfirmationEmailHtml(params: {
               <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin-top: 32px; padding-top: 24px; border-top: 1px solid ${BORDER_COLOR};">
                 <tr>
                   <td style="font-size: 13px; color: ${TEXT_MUTED};">
-                    AOSEA Global Services Limited &nbsp;·&nbsp; Port Harcourt &nbsp;·&nbsp; Lagos &nbsp;·&nbsp; Warri
+                    AOSEA Global Resources Limited &nbsp;·&nbsp; Port Harcourt &nbsp;·&nbsp; Lagos &nbsp;·&nbsp; Warri
                   </td>
                 </tr>
               </table>
@@ -135,7 +135,7 @@ export function getNotificationEmailHtml(params: {
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background: #ffffff; border-radius: 12px 12px 0 0; padding: 32px 32px 24px; border: 1px solid ${BORDER_COLOR}; border-bottom: none;">
           <tr>
             <td>
-              <img src="${getLogoUrl()}" alt="AOSEA Global Services" width="160" height="52" style="display: block; height: 52px; width: 160px; max-width: 160px; border: 0; outline: none; margin-bottom: 20px;" />
+              <img src="${getLogoUrl()}" alt="AOSEA Global Resources Limited" width="160" height="52" style="display: block; height: 52px; width: 160px; max-width: 160px; border: 0; outline: none; margin-bottom: 20px;" />
               <span style="display: inline-block; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: ${ACCENT_COLOR}; margin-bottom: 6px;">New inquiry</span>
               <h1 style="margin: 0; font-size: 24px; font-weight: 700; color: ${BRAND_COLOR}; letter-spacing: -0.02em; line-height: 1.3;">${name} <span style="color: ${TEXT_MUTED}; font-weight: 500;">—</span> ${company}</h1>
               <div style="height: 4px; width: 48px; background: ${ACCENT_COLOR}; border-radius: 2px; margin-top: 16px;"></div>

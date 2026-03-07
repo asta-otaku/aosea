@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 export default function DocumentationMobilityPage() {
   return (
     <ServiceSubPageTemplate
-      title="Value-Added Services – Documentation & Mobility"
+      title="Value-Added Services: Documentation & Mobility"
       parentTitle="Manpower Supply"
       parentHref="/services/manpower"
       number="05"

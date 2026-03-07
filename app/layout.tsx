@@ -17,7 +17,7 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "AOSEA Global Services Limited | Indigenous Oil & Gas Technical Services Nigeria",
+  title: "AOSEA Global Resources Limited | Indigenous Oil & Gas Technical Services Nigeria",
   description:
     "Indigenous technical services for Nigeria's oil & gas sector. Technical services, project management, procurement, training, and manpower supply. PIA, NUPRC, NCDMB compliant.",
   keywords: [
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     "Marine logistics Niger Delta",
   ],
   openGraph: {
-    title: "AOSEA Global Services Limited",
+    title: "AOSEA Global Resources Limited",
     description: "Indigenous technical services for Nigeria's oil & gas sector.",
   },
 };

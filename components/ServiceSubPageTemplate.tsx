@@ -138,7 +138,7 @@ export default function ServiceSubPageTemplate({
         className="py-16"
       >
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
-          <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:text-navy-900 prose-p:text-gray-600 prose-li:text-gray-600">
+          <div className="prose prose-lg max-w-none leading-relaxed prose-headings:font-heading prose-headings:text-navy-900 prose-headings:mb-4 prose-p:text-gray-600 prose-p:mb-10 prose-p:leading-[1.75] [&_p+p]:mt-8 prose-li:text-gray-600 prose-li:leading-relaxed">
             {content}
           </div>
         </div>
@@ -158,7 +158,15 @@ export default function ServiceSubPageTemplate({
                 },
                 hidden: {},
               }}
-              className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4"
+              className={`grid gap-6 grid-cols-1 sm:grid-cols-2 ${
+                metrics.length >= 4
+                  ? "lg:grid-cols-4"
+                  : metrics.length === 3
+                    ? "lg:grid-cols-3"
+                    : metrics.length === 2
+                      ? "lg:grid-cols-2"
+                      : "lg:grid-cols-1"
+              }`}
             >
               {metrics.map((m) => (
                 <motion.div
