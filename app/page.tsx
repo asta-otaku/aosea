@@ -16,11 +16,11 @@ import { images } from "@/lib/images";
 
 // One distinct image per service – no repeats; each key maps to a different source image
 const serviceImages = [
-  images.deepSeaRig,        // Technical – Forcados offshore rig (not FPSO)
-  images.refinery,          // Project Management – Dangote
-  images.pipeline,          // Procurement – supply chain
-  images.workersAtSea,      // Training – FPSO Mystras (people/ops)
-  images.oilRigSunset,      // Manpower – Unsplash field
+  "/technicalServices.jpg",
+  "/projectManagement.jpg",
+  "/procurementSupply.jpeg",
+  "/trainingCompliance.jpg",
+  "/manpowerSupply.png",
 ];
 const differentiatorImages = [images.workersAtSea, images.deepSeaRig, images.powerPlant];
 
