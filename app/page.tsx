@@ -91,7 +91,7 @@ export default function Home() {
               Indigenous Technical Services for Nigeria&apos;s Oil & Gas Sector
             </TextReveal>
             <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-gray-300">
-              AOSEA delivers technical services, project execution, procurement, training, and manpower—with regulatory fluency and execution you can count on across Nigeria&apos;s oil & gas value chain.
+              AOSEA delivers technical services, project execution, procurement, training, and manpower with regulatory fluency and execution you can count on across Nigeria&apos;s oil & gas value chain.
             </p>
             <div className="mt-12 flex flex-wrap justify-center gap-4">
               <Link
@@ -121,7 +121,7 @@ export default function Home() {
               </AnimatedHeading>
               <AnimatedDiv delay={0.1} className="mt-4">
                 <p className="max-w-2xl text-gray-600">
-                  Five pillars of expertise: technical services, project management, procurement, training & compliance, and manpower supply—for operators, marginal fields, and EPCs across Nigeria.
+                  Five pillars of expertise: technical services, project management, procurement, training & compliance, and manpower supply for operators, marginal fields, and EPCs across Nigeria.
                 </p>
               </AnimatedDiv>
             </div>
@@ -239,7 +239,7 @@ export default function Home() {
       {/* CTA Blocks */}
       <CTABlock
         title="Ready to Partner?"
-        description="Partner with an indigenous technical services company built on compliance, safety, and on-spec delivery. Request a proposal, schedule a consultation, or submit a requisition—we respond within 48 hours."
+        description="Partner with an indigenous technical services company built on compliance, safety, and on-spec delivery. Request a proposal, schedule a consultation, or submit a requisition we respond within 48 hours."
         primaryAction={{ label: "Contact Us", href: "/contact" }}
         secondaryAction={{ label: "About AOSEA", href: "/about" }}
         variant="navy"
