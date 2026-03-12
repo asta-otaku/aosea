@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const serviceLinks = [
@@ -65,8 +65,8 @@ const navLinks = [
   { href: "/", label: "Home" },
   { href: "/about", label: "About" },
   { href: "/services", label: "Services", children: serviceLinks },
-  { href: "/industries", label: "Industries" },
   { href: "/contact", label: "Contact" },
+  { href: "/industries", label: "Industries" },
 ];
 
 const ease = [0.22, 1, 0.36, 1] as const;
@@ -76,10 +76,53 @@ function isActive(href: string, pathname: string) {
   return pathname === href || pathname.startsWith(href + "/");
 }
 
+function ChevronDownIcon({ open, className }: { open: boolean; className?: string }) {
+  return (
+    <svg
+      className={className}
+      fill="none"
+      stroke="currentColor"
+      viewBox="0 0 24 24"
+      aria-hidden
+    >
+      <path
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={2}
+        d="M19 9l-7 7-7-7"
+      />
+    </svg>
+  );
+}
+
 export default function Navbar() {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [expandedCategory, setExpandedCategory] = useState<string | null>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key !== "Escape") return;
+      setServicesOpen(false);
+      setExpandedCategory(null);
+    }
+
+    function onPointerDown(e: MouseEvent) {
+      if (!servicesRef.current) return;
+      if (servicesRef.current.contains(e.target as Node)) return;
+      setServicesOpen(false);
+      setExpandedCategory(null);
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    document.addEventListener("mousedown", onPointerDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+      document.removeEventListener("mousedown", onPointerDown);
+    };
+  }, []);
 
   const linkClass = (href: string) => {
     const active = isActive(href, pathname);
@@ -137,15 +180,31 @@ export default function Navbar() {
             link.children ? (
               <div
                 key={link.href}
+                ref={servicesRef}
                 className="relative"
-                onMouseEnter={() => setServicesOpen(true)}
-                onMouseLeave={() => setServicesOpen(false)}
               >
-                <Link href={link.href} className={linkClass(link.href)}>
+                <button
+                  type="button"
+                  className={`${linkClass(link.href)} inline-flex items-center gap-1`}
+                  onClick={() => {
+                    setServicesOpen((v) => !v);
+                    setExpandedCategory(null);
+                  }}
+                  aria-expanded={servicesOpen}
+                  aria-haspopup="menu"
+                >
                   {link.label}
-                </Link>
+                  <motion.span
+                    animate={servicesOpen ? { rotate: 180 } : { rotate: 0 }}
+                    transition={{ duration: 0.18, ease }}
+                    className="text-gray-400"
+                    aria-hidden
+                  >
+                    <ChevronDownIcon open={servicesOpen} className="h-4 w-4" />
+                  </motion.span>
+                </button>
 
-                {/* Animated dropdown */}
+                {/* Accordion dropdown: category titles only until hover */}
                 <AnimatePresence>
                   {servicesOpen && (
                     <motion.div
@@ -154,32 +213,69 @@ export default function Navbar() {
                       exit={{ opacity: 0, y: -6, scale: 0.97 }}
                       transition={{ duration: 0.18, ease }}
                       style={{ transformOrigin: "top center" }}
-                      className="absolute left-0 top-full mt-1 max-h-[80vh] w-72 overflow-y-auto rounded-lg border border-gray-200 bg-white py-2 shadow-xl"
+                      className="absolute left-0 top-full mt-1 w-72 max-h-[80vh] overflow-y-auto rounded-lg border border-gray-200 bg-white py-1 shadow-xl"
                     >
-                      {link.children.map((child, i) => (
-                        <motion.div
-                          key={child.href}
-                          initial={{ opacity: 0, x: -8 }}
-                          animate={{ opacity: 1, x: 0 }}
-                          transition={{ duration: 0.15, delay: i * 0.03, ease }}
-                        >
-                          <Link
-                            href={child.href}
-                            className={childLinkClass(child.href)}
+                      {link.children.map((child) => {
+                        const isExpanded = expandedCategory === child.href;
+                        const hasSubLinks = child.children && child.children.length > 0;
+                        return (
+                          <div
+                            key={child.href}
+                            className="relative"
                           >
-                            {child.label}
-                          </Link>
-                          {child.children?.map((sub) => (
-                            <Link
-                              key={sub.href}
-                              href={sub.href}
-                              className={subChildLinkClass(sub.href)}
-                            >
-                              {sub.label}
-                            </Link>
-                          ))}
-                        </motion.div>
-                      ))}
+                            <div className="flex items-center justify-between">
+                              <Link
+                                href={child.href}
+                                className={`flex-1 ${childLinkClass(child.href)} py-2 pr-2`}
+                              >
+                                {child.label}
+                              </Link>
+                              {hasSubLinks && (
+                                <button
+                                  type="button"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setExpandedCategory((prev) =>
+                                      prev === child.href ? null : child.href
+                                    );
+                                  }}
+                                  className="flex h-9 w-9 shrink-0 items-center justify-center rounded text-gray-500 hover:bg-gray-100"
+                                  aria-expanded={isExpanded}
+                                  aria-label={isExpanded ? "Collapse category" : "Expand category"}
+                                >
+                                  <ChevronDownIcon
+                                    open={isExpanded}
+                                    className={`h-4 w-4 transition-transform duration-200 ${
+                                      isExpanded ? "rotate-180" : ""
+                                    }`}
+                                  />
+                                </button>
+                              )}
+                            </div>
+                            <AnimatePresence initial={false}>
+                              {hasSubLinks && isExpanded && (
+                                <motion.div
+                                  initial={{ height: 0, opacity: 0 }}
+                                  animate={{ height: "auto", opacity: 1 }}
+                                  exit={{ height: 0, opacity: 0 }}
+                                  transition={{ duration: 0.2, ease }}
+                                  className="overflow-hidden border-t border-gray-100 bg-gray-50/80"
+                                >
+                                  {child.children!.map((sub) => (
+                                    <Link
+                                      key={sub.href}
+                                      href={sub.href}
+                                      className={subChildLinkClass(sub.href)}
+                                    >
+                                      {sub.label}
+                                    </Link>
+                                  ))}
+                                </motion.div>
+                              )}
+                            </AnimatePresence>
+                          </div>
+                        );
+                      })}
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -206,7 +302,10 @@ export default function Navbar() {
         <button
           type="button"
           className="relative flex h-10 w-10 items-center justify-center rounded md:hidden"
-          onClick={() => setMobileOpen(!mobileOpen)}
+          onClick={() => {
+            if (!mobileOpen) setExpandedCategory(null);
+            setMobileOpen(!mobileOpen);
+          }}
           aria-label="Toggle menu"
         >
           <span className="flex w-6 flex-col gap-[5px]">
@@ -262,31 +361,63 @@ export default function Navbar() {
                   <Link
                     href={link.href}
                     className={mobileLinkClass(link.href)}
-                    onClick={() => setMobileOpen(false)}
+                    onClick={() => { setMobileOpen(false); setExpandedCategory(null); }}
                   >
                     {link.label}
                   </Link>
-                  {link.children?.map((child) => (
-                    <div key={child.href}>
-                      <Link
-                        href={child.href}
-                        className={mobileChildClass(child.href)}
-                        onClick={() => setMobileOpen(false)}
-                      >
-                        {child.label}
-                      </Link>
-                      {child.children?.map((sub) => (
-                        <Link
-                          key={sub.href}
-                          href={sub.href}
-                          className={mobileSubChildClass(sub.href)}
-                          onClick={() => setMobileOpen(false)}
-                        >
-                          {sub.label}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
+                  {link.children?.map((child) => {
+                    const isExpanded = expandedCategory === child.href;
+                    const hasSubLinks = child.children && child.children.length > 0;
+                    return (
+                      <div key={child.href} className="mt-0.5">
+                        <div className="flex items-center justify-between rounded">
+                          <Link
+                            href={child.href}
+                            className={`flex-1 ${mobileChildClass(child.href)}`}
+                            onClick={() => { setMobileOpen(false); setExpandedCategory(null); }}
+                          >
+                            {child.label}
+                          </Link>
+                          {hasSubLinks && (
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                setExpandedCategory((prev) => (prev === child.href ? null : child.href));
+                              }}
+                              className="flex h-9 w-9 shrink-0 items-center justify-center rounded text-gray-500 hover:bg-gray-200"
+                              aria-expanded={isExpanded}
+                              aria-label={isExpanded ? "Collapse" : "Expand"}
+                            >
+                              <ChevronDownIcon open={isExpanded} className={`h-4 w-4 transition-transform duration-200 ${isExpanded ? "rotate-180" : ""}`} />
+                            </button>
+                          )}
+                        </div>
+                        <AnimatePresence initial={false}>
+                          {hasSubLinks && isExpanded && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: "auto", opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.2, ease }}
+                              className="overflow-hidden"
+                            >
+                              {child.children!.map((sub) => (
+                                <Link
+                                  key={sub.href}
+                                  href={sub.href}
+                                  className={mobileSubChildClass(sub.href)}
+                                  onClick={() => setMobileOpen(false)}
+                                >
+                                  {sub.label}
+                                </Link>
+                              ))}
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
+                      </div>
+                    );
+                  })}
                 </motion.div>
               ))}
               <motion.div
